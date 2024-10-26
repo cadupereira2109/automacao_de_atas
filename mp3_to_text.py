@@ -11,4 +11,4 @@ trasncriber = aai.Trascriber()
 trasncricao = trasncriber.transcribe(mp3_filename, config = config)
 
 for sentenca in transcricao.utterances:
-  print(f"Pessoa {sentenca.speaker}: {sentenca.text})
+  print(f"Pessoa {sentenca.speaker}: {sentenca.text}")
