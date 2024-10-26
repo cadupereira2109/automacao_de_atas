@@ -60,7 +60,7 @@ if uploaded_file:
 			texto_transcrito = f"Pessoa {sentenca.speaker}: {sentenca.text}"
 			texto_transcrito = texto_transcrito + '\n'
 
-			st.text_area('Transcrição', texto_transcrito)
+		st.text_area('Transcrição', texto_transcrito)
 
 	st.success("Transcrição realizada!")
 
