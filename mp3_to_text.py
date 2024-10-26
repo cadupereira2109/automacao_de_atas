@@ -5,7 +5,7 @@ transcriber = aai.Transcriber()
 
 mp3_filename = r"C:\Users\cadup\Desktop\automacao_de_atas\bcf824becd634f6dbe7200560eb7f10f.mp3"
 
-config = aai.TranscriptionConfig(speaker_labels = True, speakers_expected = 2, langague_code = 'pt')
+config = aai.TranscriptionConfig(speaker_labels = True, speakers_expected = 2, language_code = 'pt')
 
 trasncriber = aai.Trascriber()
 trasncricao = trasncriber.transcribe(mp3_filename, config = config)
