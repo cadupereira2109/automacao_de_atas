@@ -11,7 +11,7 @@ def mp4_to_mp3(mp4_filename, mp3_filename):
 
 if __name__ == "__main__":
 
-	mp4_filename = '"C:\Users\cadup\Downloads\entrevista de Boechat com Jô Soares 360.mp4".mp4'
+	mp4_filename = "C:\Users\cadup\Downloads\entrevista de Boechat com Jô Soares 360.mp4"
 	mp3_filename = '{nome_arquivo}.mp3'.format(nome_arquivo = uuid.uuid4().hex)
 
 	mp4_to_mp3(mp4_filename, mp3_filename)
