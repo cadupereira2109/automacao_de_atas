@@ -3,9 +3,11 @@ import uuid
 
 import streamlit as st
 import assemblyai as aai
+from openai import OpenAI
 
 
-aai.settings.api_key = "b8a3ef6ed06e4ec2a8cff577afaf3d30"
+aai.settings.api_key = "ab6f8b6d30054b5f8b3a704420e21d3d"
+client = OpenAI(api_key='sk-K6xwbUlXwWi9wT78HKfjZei7RCEiVAOMkVj48NQ0dPT3BlbkFJGrxI3kneki3AFL2hVyMs9ukpDE_nS6X3wBR8vjYg0A')
 
 
 
@@ -17,6 +19,27 @@ def mp4_to_mp3(mp4_filename, mp3_filename):
 	arquivo_a_ser_convertido = AudioFileClip(mp4_filename)
 	arquivo_a_ser_convertido.write_audiofile(mp3_filename)
 	arquivo_a_ser_convertido.close()
+
+
+
+
+def generate_response(prompt_system, prompt_text):
+
+	response = client.chat.completions.create(
+		model="gpt-4o-2024-08-06",  # Specify the model to use
+		messages=[
+			{"role": "system", "content": prompt_system},
+			{"role": "user", "content": prompt_text}
+		],
+		max_tokens=150,			# Limits how long the response can be
+		temperature=0.7			# A value between 0-1 that controls randomness
+	)  # Ensure this line ends with the closing parenthesis
+
+
+	texto_retorno = response.choices[0].message.content.strip()
+
+	return texto_retorno
+
 
 
 
@@ -57,10 +80,26 @@ if uploaded_file:
 
 		texto_transcrito = ''
 		for sentenca in transcricao.utterances:
-			texto_transcrito = f"Pessoa {sentenca.speaker}: {sentenca.text}"
-			texto_transcrito = texto_transcrito + '\n'
+			texto_transcrito += f"Pessoa {sentenca.speaker}: {sentenca.text}"
+			texto_transcrito += '\n'
 
 		st.text_area('Transcrição', texto_transcrito)
 
 	st.success("Transcrição realizada!")
+
+
+
+	with st.spinner('Gernado ata de reunião'):
+
+		prompt_system = 'Você é um ótimo gerente de projetos com grandes capacidades de criação de atas de reunião'
+		
+		prompt_text = 'Em uma redação de nível especializado, resuma as notas da reunião em um único parágrafo. Em seguida, escreva uma lista de cada um de seus pontos-chaves tratados na reunião. Por fim, liste as próximas etapas ou itens de ação sugeridos pelos palestrantes, se houver.'
+		
+		prompt_text += '==========='
+		prompt_text += texto_transcrito
+
+		texto_retorno = generate_response(prompt_system, prompt_text)
+
+		st.markdown(texto_retorno)
+
 
